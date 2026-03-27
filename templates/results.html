@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="max-w-6xl mx-auto px-6 py-12">
+
+    <div class="grid md:grid-cols-3 gap-8">
+
+        <!-- Scores -->
+        <div class="md:col-span-1 space-y-8">
+            <!-- Resume Score -->
+            <div class="bg-[#002d2d]/90 p-6 rounded-xl border border-[#3dd6b8] text-center shadow-[0_0_15px_#3dd6b8]">
+                <h3 class="text-xl font-bold text-[#7fffe9] mb-2">Resume Match</h3>
+                <div
+                    class="relative w-32 h-32 mx-auto flex items-center justify-center rounded-full border-4 border-[#3dd6b8] bg-[#001a1a]">
+                    <span class="text-3xl font-extrabold text-[#3dd6b8]">{{ resume.match_score }}%</span>
+                </div>
+                <p class="mt-4 text-sm text-gray-300">Based on keyword match</p>
+            </div>
+
+            <!-- Test Score -->
+            <div class="bg-[#002d2d]/90 p-6 rounded-xl border border-[#ffb347] text-center shadow-[0_0_15px_#ffb347]">
+                <h3 class="text-xl font-bold text-[#ffb347] mb-2">Test Score</h3>
+                <div
+                    class="relative w-32 h-32 mx-auto flex items-center justify-center rounded-full border-4 border-[#ffb347] bg-[#001a1a]">
+                    <span class="text-3xl font-extrabold text-[#ffb347]">{{ test_score }}%</span>
+                </div>
+                <p class="mt-4 text-sm text-gray-300">Technical Assessment</p>
+            </div>
+        </div>
+
+        <!-- Analysis Details -->
+        <div class="md:col-span-2 space-y-8">
+
+            <!-- Skills Found -->
+            <div class="bg-[#004949] p-6 rounded-xl shadow">
+                <h3 class="text-2xl font-bold text-white mb-4"><i class="fas fa-check-circle text-[#3dd6b8] mr-2"></i>
+                    Skills Found</h3>
+                <div class="flex flex-wrap gap-2">
+                    {% for skill in resume.extracted_skills %}
+                    <span
+                        class="bg-[#003636] text-[#3dd6b8] px-3 py-1 rounded-full text-sm font-semibold border border-[#3dd6b8]">
+                        {{ skill }}
+                    </span>
+                    {% empty %}
+                    <p class="text-gray-400">No matching skills found.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Missing Skills & Recommendations -->
+            <div class="bg-[#004949] p-6 rounded-xl shadow border border-red-900/50">
+                <h3 class="text-2xl font-bold text-white mb-4"><i
+                        class="fas fa-exclamation-triangle text-red-400 mr-2"></i> Missing Skills & Recommendations</h3>
+
+                {% if recommendations %}
+                <div class="space-y-6">
+                    {% for item in recommendations %}
+                    <div class="bg-[#003636] p-4 rounded-lg group hover:bg-[#002d2d] transition">
+                        <div class="mb-3">
+                            <span class="text-red-300 font-bold text-lg">{{ item.skill }}</span>
+                            <span class="text-xs text-gray-400 ml-2">Recommended Resources</span>
+                        </div>
+
+                        <div class="grid md:grid-cols-3 gap-3">
+                            {% for link in item.links %}
+                            <a href="{{ link }}" target="_blank"
+                                class="block text-center px-3 py-2 bg-[#3dd6b8] text-[#002727] text-xs font-bold rounded hover:shadow-[0_0_10px_#3dd6b8] transition truncate">
+                                Resource {{ forloop.counter }} <i class="fas fa-external-link-alt ml-1"></i>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-[#3dd6b8]">Great job! You have all the required skills.</p>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="mt-12 text-center">
+        <a href="{% url 'upload_resume' %}"
+            class="inline-block border border-[#7fffe9] text-[#7fffe9] px-6 py-3 rounded hover:bg-[#7fffe9] hover:text-[#002727] transition">
+            Analyze Another Resume
+        </a>
+    </div>
+
+</section>
+{% endblock %}

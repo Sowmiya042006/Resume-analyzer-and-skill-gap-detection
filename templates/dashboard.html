@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="max-w-7xl mx-auto px-6 py-12">
+
+    <!-- Welcome Header -->
+    <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#0f766e]/50 pb-6">
+        <div>
+            <p class="text-[#3dd6b8] font-semibold tracking-wider uppercase text-sm mb-1">Your Personal Workspace</p>
+            <h1 class="text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
+                Hello, <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#3dd6b8] to-[#0f766e]">
+                    {% if user.username %}
+                    {{ user.username|title }}
+                    {% else %}
+                    {{ user.email }}
+                    {% endif %}
+                </span>
+            </h1>
+        </div>
+        <a href="{% url 'upload_resume' %}"
+            class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#3dd6b8] to-[#25a890] text-[#002727] px-6 py-3 rounded-xl font-bold hover:shadow-[0_0_20px_rgba(61,214,184,0.4)] hover:scale-105 transition-all duration-300">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            Analyze New Resume
+        </a>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <!-- Stat 1 -->
+        <div
+            class="relative overflow-hidden bg-[#002d2d]/60 backdrop-blur-md p-6 rounded-2xl border border-[#0f766e]/50 hover:border-[#3dd6b8]/50 transition-colors group">
+            <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                <i class="fas fa-file-alt text-6xl text-[#3dd6b8]"></i>
+            </div>
+            <h3 class="text-gray-400 text-sm font-semibold uppercase tracking-wider mb-2">Total Analyses</h3>
+            <div class="flex items-baseline gap-3">
+                <span class="text-5xl font-black text-white">{{ total_analyzed }}</span>
+                <span class="text-[#3dd6b8] text-sm font-medium">resumes</span>
+            </div>
+        </div>
+
+        <!-- Stat 2 -->
+        <div
+            class="relative overflow-hidden bg-[#002d2d]/60 backdrop-blur-md p-6 rounded-2xl border border-[#0f766e]/50 hover:border-[#3dd6b8]/50 transition-colors group">
+            <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                <i class="fas fa-chart-line text-6xl text-[#3dd6b8]"></i>
+            </div>
+            <h3 class="text-gray-400 text-sm font-semibold uppercase tracking-wider mb-2">Average Match Score</h3>
+            <div class="flex items-baseline gap-3">
+                <span class="text-5xl font-black text-white">{{ avg_score }}%</span>
+                <span class="text-gray-400 text-sm font-medium">overall</span>
+            </div>
+        </div>
+
+        <!-- Stat 3 -->
+        <div
+            class="relative overflow-hidden bg-gradient-to-br from-[#004949] to-[#002d2d] backdrop-blur-md p-6 rounded-2xl border border-[#0f766e] group flex flex-col justify-center items-start">
+            <h3 class="text-[#7fffe9] text-lg font-bold mb-2">Ready to level up?</h3>
+            <p class="text-gray-300 text-sm mb-4">Check your latest skill gaps and hit the books with our free
+                resources.</p>
+            {% if resumes %}
+            <a href="#history"
+                class="text-sm font-semibold text-white border-b hover:text-[#3dd6b8] hover:border-[#3dd6b8] transition-colors pb-1">View
+                Recent History &rarr;</a>
+            {% else %}
+            <span class="text-sm italic text-gray-500">Upload a resume first</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- History Section -->
+    <div id="history"
+        class="bg-[#001a1a]/80 backdrop-blur-lg rounded-2xl border border-[#0f766e]/50 overflow-hidden shadow-2xl">
+        <div class="px-8 py-6 border-b border-[#0f766e]/50 bg-[#002d2d]/30 flex justify-between items-center">
+            <h2 class="text-xl font-bold text-white flex items-center gap-3">
+                <i class="fas fa-history text-[#3dd6b8]"></i> Analysis History
+            </h2>
+        </div>
+
+        <div class="p-0">
+            {% if resumes %}
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-[#002727]/50 text-gray-400 text-xs uppercase tracking-wider">
+                            <th class="py-4 px-8 font-semibold">Date</th>
+                            <th class="py-4 px-6 font-semibold">Target Job Role</th>
+                            <th class="py-4 px-6 font-semibold">Document</th>
+                            <th class="py-4 px-8 font-semibold text-right">Match Score</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-[#0f766e]/30">
+                        {% for resume in resumes %}
+                        <tr class="hover:bg-[#003636]/50 transition-colors group">
+                            <td class="py-5 px-8 whitespace-nowrap">
+                                <span class="text-gray-300 font-medium">{{ resume.uploaded_at|date:"M d, Y" }}</span>
+                                <div class="text-xs text-gray-500 mt-1">{{ resume.uploaded_at|time:"H:i A" }}</div>
+                            </td>
+                            <td class="py-5 px-6">
+                                {% if resume.job_role %}
+                                <span
+                                    class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#004949]/50 text-[#7fffe9] text-sm font-medium border border-[#0f766e]/50">
+                                    <i class="fas fa-briefcase text-xs"></i> {{ resume.job_role.title }}
+                                </span>
+                                {% else %}
+                                <span class="text-gray-500 italic text-sm">Not specified</span>
+                                {% endif %}
+                            </td>
+                            <td class="py-5 px-6">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-8 h-8 rounded bg-[#002d2d] border border-[#0f766e] flex items-center justify-center text-[#3dd6b8]">
+                                        {% if '.pdf' in resume.file.name|lower %}
+                                        <i class="fas fa-file-pdf"></i>
+                                        {% else %}
+                                        <i class="fas fa-file-word"></i>
+                                        {% endif %}
+                                    </div>
+                                    <span
+                                        class="text-gray-300 text-sm max-w-[200px] truncate group-hover:text-white transition-colors"
+                                        title="{{ resume.file.name|slice:'8:' }}">
+                                        {{ resume.file.name|slice:"8:" }}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="py-5 px-8 text-right">
+                                <div class="inline-flex items-center justify-center w-14 h-14 rounded-full border-4
+                                    {% if resume.match_score >= 80 %} border-green-500/30 text-green-400 bg-green-500/10
+                                    {% elif resume.match_score >= 50 %} border-yellow-500/30 text-yellow-400 bg-yellow-500/10
+                                    {% else %} border-red-500/30 text-red-400 bg-red-500/10
+                                    {% endif %}">
+                                    <span class="text-lg font-bold">{{ resume.match_score }}<span
+                                            class="text-xs">%</span></span>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-20 px-6">
+                <div
+                    class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-[#002d2d] border border-[#0f766e]/50 mb-6 shadow-[0_0_30px_rgba(61,214,184,0.1)]">
+                    <i class="fas fa-folder-open text-4xl text-[#3dd6b8]"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2">No analyses yet</h3>
+                <p class="text-gray-400 max-w-sm mx-auto mb-8">You haven't uploaded any resumes for analysis. Start your
+                    journey by checking your skill match.</p>
+                <a href="{% url 'upload_resume' %}"
+                    class="inline-block bg-[#004949] text-white px-8 py-3 rounded-lg font-medium hover:bg-[#005c5c] border border-[#0f766e] transition-colors">
+                    Upload Your First Resume
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

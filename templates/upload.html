@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="max-w-4xl mx-auto px-6 py-20">
+    <div
+        class="bg-[#002d2d]/80 backdrop-blur p-8 rounded-xl shadow-[0_0_20px_rgba(61,214,184,0.1)] border border-[#0f766e]">
+        <h2 class="text-3xl font-bold text-[#3dd6b8] mb-6 text-center">Upload Your Resume</h2>
+        <p class="text-gray-300 text-center mb-8">Select a job role and upload your resume to get started.</p>
+
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+
+            <!-- Job Role Selection -->
+            <div>
+                <label for="role" class="block text-[#7fffe9] font-medium mb-2">Select Job Role</label>
+                <select name="role" id="role"
+                    class="w-full bg-[#004949] text-white border border-[#0f766e] rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#3dd6b8]">
+                    {% for role in roles %}
+                    <option value="{{ role.id }}">{{ role.title }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- File Upload -->
+            <div>
+                <label for="resume" class="block text-[#7fffe9] font-medium mb-2">Upload Resume (PDF/DOCX)</label>
+                <input type="file" name="resume" id="resume" accept=".pdf,.docx" required class="w-full text-gray-300 file:mr-4 file:py-2 file:px-4
+                           file:rounded-full file:border-0
+                           file:text-sm file:font-semibold
+                           file:bg-[#3dd6b8] file:text-[#002727]
+                           hover:file:bg-[#2bb89e]" />
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center pt-4">
+                <button type="submit"
+                    class="bg-[#3dd6b8] text-[#002727] px-8 py-3 rounded-lg font-bold text-lg hover:shadow-[0_0_25px_#3dd6b8] transition transform hover:scale-105">
+                    Analyze Resume <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

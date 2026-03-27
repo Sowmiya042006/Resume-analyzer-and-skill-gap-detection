@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="max-w-4xl mx-auto px-6 py-20">
+    <div class="bg-[#002d2d]/80 backdrop-blur p-8 rounded-xl shadow border border-[#0f766e]">
+        <h2 class="text-3xl font-bold text-[#3dd6b8] mb-2 text-center">Skill Assessment</h2>
+
+
+        <form method="post" class="space-y-8">
+            {% csrf_token %}
+
+            {% for q in questions %}
+            <div class="bg-[#004949] p-6 rounded-lg">
+                <p class="text-xl font-semibold text-white mb-4">{{ forloop.counter }}. {{ q.text }}</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {% for option in q.options %}
+                    <label
+                        class="flex items-center space-x-3 cursor-pointer p-3 rounded hover:bg-[#003636] transition border border-transparent hover:border-[#3dd6b8]">
+                        <input type="radio" name="question_{{ q.id }}" value="{{ option }}"
+                            class="form-radio text-[#3dd6b8] focus:ring-[#3dd6b8]" required>
+                        <span class="text-gray-200">{{ option }}</span>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center text-gray-400">No questions available for this role yet.</p>
+            {% endfor %}
+
+            {% if questions %}
+            <div class="text-center pt-6">
+                <button type="submit"
+                    class="bg-[#3dd6b8] text-[#002727] px-8 py-3 rounded-lg font-bold text-lg hover:shadow-[0_0_20px_#3dd6b8] transition">
+                    Submit Test
+                </button>
+            </div>
+            {% endif %}
+        </form>
+    </div>
+</section>
+{% endblock %}

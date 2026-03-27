@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- HERO -->
+<section class="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-14 items-center">
+
+  <!-- TEXT -->
+  <div>
+    <h2 class="text-4xl lg:text-5xl font-extrabold text-[#3dd6b8] leading-tight mb-6">
+      AI-Powered Resume Analysis <br> & Skill Gap Detection
+    </h2>
+    <p class="text-gray-300 text-lg mb-8 max-w-xl">
+      Analyze your resume, match it with job roles, identify missing skills, and get free learning resources using AI &
+      NLP.
+    </p>
+
+    <div class="flex gap-4">
+      <a href="#features"
+        class="border border-[#3dd6b8] px-6 py-3 rounded-lg hover:bg-[#3dd6b8] hover:text-[#002727] transition">
+        Explore Features
+      </a>
+    </div>
+  </div>
+
+  <!-- IMAGE -->
+  <div class="flex justify-center">
+    <!-- Using a placeholder or the same image as before if available online -->
+    <img src="https://storage.googleapis.com/a1aa/image/d0cbe7ff-cf4d-4fd8-7d7e-837dd19d4879.jpg"
+      class="w-[260px] md:w-[320px] rounded-xl shadow-xl hover:scale-105 transition"
+      alt="Resume analysis illustration" />
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="py-20 px-6 bg-[#002d2d]/80 backdrop-blur">
+  <div class="max-w-5xl mx-auto text-center">
+    <h3 class="text-3xl font-bold text-[#3dd6b8] mb-6">About ResumeWeb</h3>
+    <p class="text-gray-300 leading-relaxed">
+      ResumeWeb helps students and job seekers understand how well their resume matches industry standards.
+      Using AI, NLP, and machine learning, we detect missing skills and guide users toward improvement.
+    </p>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="py-20 px-6">
+  <div class="max-w-7xl mx-auto">
+    <h3 class="text-3xl font-bold text-[#3dd6b8] text-center mb-12">Key Features</h3>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="p-6 bg-[#004949] rounded-lg shadow hover:shadow-[0_0_20px_#ffb347] transition">
+        <i class="fas fa-file-alt text-3xl text-[#3dd6b8] mb-4"></i>
+        <h4 class="text-lg font-semibold mb-2">Resume Analyzer</h4>
+        <p class="text-gray-200 text-sm">
+          AI scans resume structure, keywords, and relevance.
+        </p>
+      </div>
+
+      <div class="p-6 bg-[#004949] rounded-lg shadow hover:shadow-[0_0_20px_#ffb347] transition">
+        <i class="fas fa-user-check text-3xl text-[#3dd6b8] mb-4"></i>
+        <h4 class="text-lg font-semibold mb-2">Skill Matching</h4>
+        <p class="text-gray-200 text-sm">
+          Compare your skills with real job role requirements.
+        </p>
+      </div>
+
+      <div class="p-6 bg-[#004949] rounded-lg shadow hover:shadow-[0_0_20px_#ffb347] transition">
+        <i class="fas fa-lightbulb text-3xl text-[#3dd6b8] mb-4"></i>
+        <h4 class="text-lg font-semibold mb-2">Learning Suggestions</h4>
+        <p class="text-gray-200 text-sm">
+          Get free courses, resources & roadmap suggestions.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="py-24 px-6 bg-[#003636]/80 backdrop-blur">
+  <div class="max-w-7xl mx-auto">
+
+    <h3 class="text-3xl font-bold text-[#3dd6b8] text-center mb-14">
+      How It Works
+    </h3>
+
+    <div class="grid md:grid-cols-4 gap-8">
+
+      <!-- Step 1 -->
+      <div class="bg-[#004949] p-6 rounded-xl text-center shadow
+                  hover:shadow-[0_0_20px_#3dd6b8] transition">
+        <h4 class="font-semibold text-lg mb-2">Upload Resume</h4>
+        <p class="text-gray-200 text-sm">
+          Upload your resume in PDF or DOC format.
+        </p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="bg-[#004949] p-6 rounded-xl text-center shadow
+                  hover:shadow-[0_0_20px_#3dd6b8] transition">
+        <h4 class="font-semibold text-lg mb-2">AI Analysis</h4>
+        <p class="text-gray-200 text-sm">
+          NLP models analyze skills, keywords, and structure.
+        </p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="bg-[#004949] p-6 rounded-xl text-center shadow
+                  hover:shadow-[0_0_20px_#3dd6b8] transition">
+        <h4 class="font-semibold text-lg mb-2">Skill Gap Detection</h4>
+        <p class="text-gray-200 text-sm">
+          Missing skills are identified for your target job role.
+        </p>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="bg-[#004949] p-6 rounded-xl text-center shadow
+                  hover:shadow-[0_0_20px_#3dd6b8] transition">
+        <h4 class="font-semibold text-lg mb-2">Learning Path</h4>
+        <p class="text-gray-200 text-sm">
+          Get free resources, courses, and a clear roadmap.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+{% endblock %}

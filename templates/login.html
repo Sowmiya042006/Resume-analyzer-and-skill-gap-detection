@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="max-w-md mx-auto px-6 py-20">
+    <div
+        class="bg-[#002d2d]/80 backdrop-blur p-8 rounded-xl shadow-[0_0_20px_rgba(61,214,184,0.1)] border border-[#0f766e]">
+        <h2 class="text-3xl font-bold text-[#3dd6b8] mb-6 text-center">Login</h2>
+
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+
+            {% for field in form %}
+            <div>
+                <label class="block text-[#7fffe9] font-medium mb-1">{{ field.label }}</label>
+                <div class="text-gray-900">
+                    {{ field }}
+                </div>
+                {% if field.errors %}
+                <p class="text-red-400 text-sm mt-1">{{ field.errors.0 }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <div class="pt-2">
+                <button type="submit"
+                    class="w-full bg-[#3dd6b8] text-[#002727] px-6 py-3 rounded-lg font-bold text-lg hover:shadow-[0_0_25px_#3dd6b8] transition">
+                    Login
+                </button>
+            </div>
+        </form>
+
+        <p class="text-center text-gray-400 mt-6">
+            Don't have an account? <a href="{% url 'signup' %}" class="text-[#3dd6b8] hover:underline">Sign up</a>
+        </p>
+    </div>
+</section>
+
+<style>
+    /* Quick override to style standard Django inputs */
+    input {
+        width: 100%;
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        background-color: #004949;
+        color: white;
+        border: 1px solid #0f766e;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: #3dd6b8;
+        box-shadow: 0 0 0 2px rgba(61, 214, 184, 0.2);
+    }
+</style>
+{% endblock %}
