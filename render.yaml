@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: resume-analyzer
+    env: python
+    plan: free
+    buildCommand: ./build.sh
+    startCommand: gunicorn resume_analyser.wsgi:application
