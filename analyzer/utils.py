@@ -1,4 +1,4 @@
-import spacy
+
 import PyPDF2
 import docx
 
@@ -11,10 +11,7 @@ from django.conf import settings
 import os
 
 # Load NLP model
-try:
-    nlp = spacy.load("en_core_web_sm")
-except:
-    nlp = None # Handle case where model isn't downloaded yet
+# Handle case where model isn't downloaded yet
 
 def extract_text_from_pdf(pdf_path):
     text = ""
